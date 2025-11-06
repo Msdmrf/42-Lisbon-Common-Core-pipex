@@ -6,7 +6,7 @@
 #    By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/10 18:13:33 by migusant          #+#    #+#              #
-#    Updated: 2025/07/09 20:58:19 by migusant         ###   ########.fr        #
+#    Updated: 2025/11/06 16:54:14 by migusant         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ OFILES_DIR = objects/
 
 CHARS_DIR = $(CFILES_DIR)chars/
 CONVERTERS_DIR = $(CFILES_DIR)converters/
-GERNEXTLINE_DIR = $(CFILES_DIR)getnextline/
+GETNEXTLINE_DIR = $(CFILES_DIR)getnextline/
 LISTS_DIR = $(CFILES_DIR)lists/
 MEMORY_DIR = $(CFILES_DIR)memory/
 PRINTF_DIR = $(CFILES_DIR)printf/
@@ -60,8 +60,8 @@ CHARS = $(CHARS_DIR)ft_isalnum.c $(CHARS_DIR)ft_isalpha.c $(CHARS_DIR)ft_isascii
 CONVERTERS = $(CONVERTERS_DIR)ft_atoi.c $(CONVERTERS_DIR)ft_itoa.c \
             $(CONVERTERS_DIR)ft_tolower.c $(CONVERTERS_DIR)ft_toupper.c
 
-GETNEXTLINE = $(GERNEXTLINE_DIR)get_next_line.c $(GERNEXTLINE_DIR)get_next_line_utils.c \
-              $(GERNEXTLINE_DIR)get_next_line_bonus.c
+GETNEXTLINE = $(GETNEXTLINE_DIR)get_next_line.c $(GETNEXTLINE_DIR)get_next_line_utils.c \
+              $(GETNEXTLINE_DIR)get_next_line_bonus.c
 
 LISTS = $(LISTS_DIR)ft_lstadd_back.c $(LISTS_DIR)ft_lstadd_front.c \
         $(LISTS_DIR)ft_lstclear.c $(LISTS_DIR)ft_lstdelone.c $(LISTS_DIR)ft_lstiter.c \
