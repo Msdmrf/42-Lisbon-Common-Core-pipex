@@ -1,0 +1,4 @@
+Testers:
+https://github.com/michmos/42_pipex_tester
+https://github.com/bastienkody/pipex_tester
+https://github.com/vfurmane/pipex-tester
