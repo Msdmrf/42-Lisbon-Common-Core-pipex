@@ -6,7 +6,7 @@
 #    By: migusant <migusant@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/02 16:11:44 by migusant          #+#    #+#              #
-#    Updated: 2025/08/04 21:06:18 by migusant         ###   ########.fr        #
+#    Updated: 2025/11/16 18:32:44 by migusant         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@
 # **************************************************************************** #
 
 NAME = pipex
-BONUS_NAME = pipex_bonus
 LIBFT = libft/libft.a
 
 # **************************************************************************** #
@@ -49,35 +48,19 @@ RESET = \033[0m
 #                              SOURCE FILES                                    #
 # **************************************************************************** #
 
-COMMON_FILES = pipex_utils.c \
-				process_handlers.c \
-				path_finder.c \
-				error_handling.c
-
 SRC_FILES = pipex.c \
-				$(COMMON_FILES)
-
-BONUS_SRC_FILES = pipex_bonus.c \
-				here_doc.c \
-				here_doc_utils.c \
-				multiple_pipes.c \
-				multiple_pipes_utils.c \
-				multiple_pipes_process.c \
-				$(COMMON_FILES)
+				error_handlers.c \
+				process_handlers.c \
+				pipex_utils.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
-
-BONUS_SRC = $(addprefix $(SRC_DIR), $(BONUS_SRC_FILES))
-BONUS_OBJ = $(addprefix $(OBJ_DIR), $(BONUS_SRC_FILES:.c=.o))
 
 # **************************************************************************** #
 #                                 TARGETS                                      #
 # **************************************************************************** #
 
 all: $(LIBFT) $(NAME)
-
-bonus: $(LIBFT) $(BONUS_NAME)
 
 $(LIBFT):
 	@echo "$(YELLOW)Building libft...$(RESET)"
@@ -87,12 +70,6 @@ $(NAME): $(OBJ)
 	@echo "$(YELLOW)Building $(NAME)...$(RESET)"
 	@$(CC) $(OBJ) -L$(LIBFT_DIR) -lft -o $(NAME)
 	@echo "$(GREEN)$(NAME) successfully created!$(RESET)"
-
-$(BONUS_NAME): $(BONUS_OBJ)
-	@echo "$(YELLOW)Building $(NAME) with bonus features...$(RESET)"
-	@$(CC) $(BONUS_OBJ) -L$(LIBFT_DIR) -lft -o $(NAME)
-	@echo "$(GREEN)$(NAME) with bonus features successfully created!$(RESET)"
-	@touch $(BONUS_NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
@@ -109,7 +86,6 @@ clean:
 		echo "$(RED)Object files have been cleaned!$(RESET)"; \
 		echo "$(YELLOW)└── Removed directory: $(OBJ_DIR)$(RESET)"; \
 	fi
-	@$(RM) $(BONUS_NAME)
 	@make -C $(LIBFT_DIR) clean
 
 fclean: clean
@@ -122,4 +98,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all bonus clean fclean re
+.PHONY: all clean fclean re
