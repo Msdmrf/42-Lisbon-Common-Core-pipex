@@ -44,19 +44,25 @@ static int	wait_for_processes(pid_t pid1, pid_t pid2)
 int	basic_pipex(char **argv, char **envp)
 {
 	int		fd[2];
+	int		outfile_fd;
 	pid_t	pid1;
 	pid_t	pid2;
 
+	outfile_fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (outfile_fd == -1)
+		basic_error(argv[4], 0);
+	else
+		close (outfile_fd);
 	if (pipe(fd) == -1)
-		basic_error("pipe");
+		basic_error("pipe", 1);
 	pid1 = fork();
 	if (pid1 == -1)
-		basic_error("fork");
+		basic_error("fork", 1);
 	if (pid1 == 0)
 		first_process(argv[1], argv[2], envp, fd);
 	pid2 = fork();
 	if (pid2 == -1)
-		basic_error("fork");
+		basic_error("fork", 1);
 	if (pid2 == 0)
 		last_process(argv[3], argv[4], envp, fd);
 	close(fd[0]);
@@ -87,7 +93,11 @@ void	last_process(char *cmd, char *outfile, char **envp, int *fd)
 
 	output_fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (output_fd == -1)
-		file_error(outfile, fd);
+	{
+		close(fd[0]);
+		close(fd[1]);
+		exit(EXIT_FAILURE);
+	}
 	if (dup2(fd[0], STDIN_FILENO) == -1)
 		dup2_error("dup2", output_fd, fd);
 	if (dup2(output_fd, STDOUT_FILENO) == -1)

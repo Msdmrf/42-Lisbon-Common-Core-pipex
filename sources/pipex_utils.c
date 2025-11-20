@@ -83,6 +83,8 @@ void	execute_command(char *argv, char **envp)
 	char	*path;
 	char	**cmd;
 
+	if (!argv || !*argv)
+		exit(EXIT_SUCCESS);
 	path = prepare_command(argv, envp, &cmd);
 	if (execve(path, cmd, envp) == -1)
 		exec_error(cmd[0], path, cmd);

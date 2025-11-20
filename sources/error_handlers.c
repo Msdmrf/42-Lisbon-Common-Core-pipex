@@ -12,14 +12,15 @@
 
 #include "pipex.h"
 
-void	basic_error(char *error)
+void	basic_error(char *error, int is_exit)
 {
 	ft_putstr_fd("pipex: ", 2);
 	ft_putstr_fd(error, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(strerror(errno), 2);
 	ft_putstr_fd("\n", 2);
-	exit(EXIT_FAILURE);
+	if (is_exit)
+		exit(EXIT_FAILURE);
 }
 
 void	file_error(char *filename, int *fd)
@@ -43,7 +44,7 @@ void	dup2_error(char *error, int infile, int *fd)
 		close(infile);
 	close(fd[0]);
 	close(fd[1]);
-	basic_error(error);
+	basic_error(error, 1);
 }
 
 void	exec_error(char *cmd, char *path, char **args)
@@ -60,12 +61,17 @@ void	exec_error(char *cmd, char *path, char **args)
 
 void	cmd_error(char *cmd, int is_path, char **args)
 {
-	ft_putstr_fd("pipex: ", 2);
-	ft_putstr_fd(cmd, 2);
 	if (is_path)
+	{
+		ft_putstr_fd("pipex: ", 2);
+		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
+	}
 	else
+	{
+		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd(": command not found\n", 2);
+	}
 	free_all(args);
 	exit(EXIT_COMMAND_NOT_FOUND);
 }
