@@ -1,0 +1,250 @@
+VALID/INVALID CMD1/CMD2 (NON EXISTANT) AND VALID FILES
+< Makefile cat | wc -l > bashout
+cat bashout
+./pipex Makefile cat "wc -l" pipout
+cat pipout
+
+< Makefile invalidcmd1 | wc -l > bashout
+echo $?
+./pipex Makefile invalidcmd1 "wc -l" pipout
+echo $?
+
+< Makefile cat | invalidcmd2 > bashout
+echo $?
+./pipex Makefile cat invalidcmd2 pipout
+echo $?
+
+< Makefile invalidcmd1 | invalidcmd2 > bashout      -------------> MESSAGE CAN BE "CMD1 CMD2" OR "CMD2 CMD1"!
+echo $?
+./pipex Makefile invalidcmd1 invalidcmd2 pipout     -------------> MESSAGE IS ALWAYS "CMD1 CMD2"!
+echo $?
+
+
+
+
+
+VALID/INVALID CMD1/CMD2 (NO EXECUTE PERMISSION CMD) AND VALID FILES
+< Makefile ./noexecutepermissioncmd1 | wc -l > bashout
+echo $?
+./pipex Makefile ./noexecutepermissioncmd1 "wc -l" pipout
+echo $?
+
+< Makefile cat | ./noexecutepermissioncmd2 > bashout
+echo $?
+./pipex Makefile cat ./noexecutepermissioncmd2 pipout
+echo $?
+
+< Makefile ./noexecutepermissioncmd1 | ./noexecutepermissioncmd2 > bashout      -------------> MESSAGE CAN BE "CMD1 CMD2" OR "CMD2 CMD1"!
+echo $?
+./pipex Makefile ./noexecutepermissioncmd1 ./noexecutepermissioncmd2 pipout     -------------> MESSAGE IS ALWAYS "CMD1 CMD2"!
+echo $?
+
+
+
+
+
+VALID/INVALID CMD1/CMD2 AND INVALID INFILE (DOES NOT EXIST)
+< invalidinfile cat | wc -l > bashout
+echo $?
+./pipex invalidinfile cat "wc -l" pipout
+echo $?
+
+< invalidinfile invalidcmd1 | wc -l > bashout
+echo $?
+./pipex invalidinfile invalidcmd1 "wc -l" pipout
+echo $?
+
+< invalidinfile cat | invalidcmd2 > bashout
+echo $?
+./pipex invalidinfile cat invalidcmd2 pipout
+echo $?
+
+< invalidinfile invalidcmd1 | invalidcmd2 > bashout
+echo $?
+./pipex invalidinfile invalidcmd1 invalidcmd2 pipout
+echo $?
+
+
+
+
+
+VALID/INVALID CMD1/CMD2 AND INVALID OUTFILE (DOES NOT EXIST)
+< Makefile cat | wc -l > invalidoutfile
+echo $?
+./pipex Makefile cat "wc -l" invalidoutfile
+echo $?
+
+< Makefile invalidcmd1 | wc -l > invalidoutfile
+echo $?
+./pipex Makefile invalidcmd1 "wc -l" invalidoutfile
+echo $?
+
+< Makefile cat | invalidcmd2 > invalidoutfile
+echo $?
+./pipex Makefile cat invalidcmd2 invalidoutfile
+echo $?
+
+< Makefile invalidcmd1 | invalidcmd2 > invalidoutfile     -------------> MESSAGE CAN BE "CMD1 CMD2" OR "CMD2 CMD1"!
+echo $?
+./pipex Makefile invalidcmd1 invalidcmd2 invalidoutfile   -------------> MESSAGE IS ALWAYS "CMD1 CMD2"!
+echo $?
+
+
+
+
+
+VALID/INVALID CMD1/CMD2 AND INVALID INFILE/OUTFILE (DOES NOT EXIST)
+< invalidinfile cat | wc -l > invalidoutfile
+echo $?
+./pipex invalidinfile cat "wc -l" invalidoutfile
+echo $?
+
+< invalidinfile invalidcmd1 | wc -l > invalidoutfile
+echo $?
+./pipex invalidinfile invalidcmd1 "wc -l" invalidoutfile
+echo $?
+
+< invalidinfile cat | invalidcmd2 > invalidoutfile
+echo $?
+./pipex invalidinfile cat invalidcmd2 invalidoutfile
+echo $?
+
+< invalidinfile invalidcmd1 | invalidcmd2 > invalidoutfile
+echo $?
+./pipex invalidinfile invalidcmd1 invalidcmd2 invalidoutfile
+echo $?
+
+
+
+
+
+VALID/INVALID CMD1/CMD2 AND INVALID INFILE (NO PERMISSION)
+< nopermissioninfile cat | wc -l > bashout
+echo $?
+./pipex nopermissioninfile cat "wc -l" pipout
+echo $?
+
+< nopermissioninfile invalidcmd1 | wc -l > bashout
+echo $?
+./pipex nopermissioninfile invalidcmd1 "wc -l" pipout
+echo $?
+
+< nopermissioninfile cat | invalidcmd2 > bashout
+echo $?
+./pipex nopermissioninfile cat invalidcmd2 pipout
+echo $?
+
+< nopermissioninfile invalidcmd1 | invalidcmd2 > bashout
+echo $?
+./pipex nopermissioninfile invalidcmd1 invalidcmd2 pipout
+echo $?
+
+
+
+
+
+VALID/INVALID CMD1/CMD2 AND INVALID OUTFILE (NO PERMISSION)
+< Makefile cat | wc -l > nopermissionoutfilebash
+echo $?
+./pipex Makefile cat "wc -l" nopermissionoutfilepipex
+echo $?
+
+< Makefile invalidcmd1 | wc -l > nopermissionoutfilebash
+echo $?
+./pipex Makefile invalidcmd1 "wc -l" nopermissionoutfilepipex
+echo $?
+
+< Makefile cat | invalidcmd2 > nopermissionoutfilebash
+echo $?
+./pipex Makefile cat invalidcmd2 nopermissionoutfilepipex
+echo $?
+
+< Makefile invalidcmd1 | invalidcmd2 > nopermissionoutfilebash
+echo $?
+./pipex Makefile invalidcmd1 invalidcmd2 nopermissionoutfilepipex
+echo $?
+
+
+
+
+
+VALID/INVALID CMD1/CMD2 AND INVALID INFILE/OUTFILE (NO PERMISSION)
+< nopermissioninfile cat | wc -l > nopermissionoutfilebash                      -------------> MESSAGE CAN BE "OUTFILE INFILE" OR "INFILE OUTFILE"!
+echo $?
+./pipex nopermissioninfile cat "wc -l" nopermissionoutfilepipex                 -------------> MESSAGE IS ALWAYS "OUTFILE INFILE"!
+echo $?
+
+< nopermissioninfile invalidcmd1 | wc -l > nopermissionoutfilebash              -------------> MESSAGE CAN BE "OUTFILE INFILE" OR "INFILE OUTFILE"!
+echo $?
+./pipex nopermissioninfile invalidcmd1 "wc -l" nopermissionoutfilepipex         -------------> MESSAGE IS ALWAYS "OUTFILE INFILE"!
+echo $?
+
+< nopermissioninfile cat | invalidcmd2 > nopermissionoutfilebash                -------------> MESSAGE CAN BE "OUTFILE INFILE" OR "INFILE OUTFILE"!
+echo $?
+./pipex nopermissioninfile cat invalidcmd2 nopermissionoutfilepipex             -------------> MESSAGE IS ALWAYS "OUTFILE INFILE"!
+echo $?
+
+< nopermissioninfile invalidcmd1 | invalidcmd2 > nopermissionoutfilebash        -------------> MESSAGE CAN BE "OUTFILE INFILE" OR "INFILE OUTFILE"!
+echo $?
+./pipex nopermissioninfile invalidcmd1 invalidcmd2 nopermissionoutfilepipex     -------------> MESSAGE IS ALWAYS "OUTFILE INFILE"!
+echo $?
+
+
+
+
+
+VALID/INVALID CMD1/CMD2 (NO EXECUTE PERMISSION CMD) AND INVALID INFILE/OUTFILE (NO PERMISSION)
+< nopermissioninfile ./noexecutepermissioncmd1 | wc -l > nopermissionoutfilebash                            -------------> MESSAGE CAN BE "OUTFILE INFILE" OR "INFILE OUTFILE"!
+echo $?
+./pipex nopermissioninfile ./noexecutepermissioncmd1 "wc -l" nopermissionoutfilepipex                       -------------> MESSAGE IS ALWAYS "OUTFILE INFILE"!
+echo $?
+
+< nopermissioninfile cat | ./noexecutepermissioncmd2 > nopermissionoutfilebash                              -------------> MESSAGE CAN BE "OUTFILE INFILE" OR "INFILE OUTFILE"!
+echo $?
+./pipex nopermissioninfile cat ./noexecutepermissioncmd2 nopermissionoutfilepipex                           -------------> MESSAGE IS ALWAYS "OUTFILE INFILE"!
+echo $?
+
+< nopermissioninfile ./noexecutepermissioncmd1 | ./noexecutepermissioncmd2 > nopermissionoutfilebash        -------------> MESSAGE CAN BE "OUTFILE INFILE" OR "INFILE OUTFILE"!
+echo $?
+./pipex nopermissioninfile ./noexecutepermissioncmd1 ./noexecutepermissioncmd2 nopermissionoutfilepipex     -------------> MESSAGE IS ALWAYS "OUTFILE INFILE"!
+echo $?
+
+
+
+
+
+NO CMD1/CMD2 AND VALID FILES
+< Makefile | wc -l > bashout
+echo $?
+./pipex Makefile "" "wc -l" pipout
+echo $?
+
+< Makefile cat | > bashout
+echo $?
+./pipex Makefile cat "" pipout
+echo $?
+
+< Makefile | > bashout
+echo $?
+./pipex Makefile "" "" pipout
+echo $?
+
+
+
+
+
+EMPTY CMD1/CMD2 AND VALID FILES         -------------> OUT OF SCOPE OF PIPEX PROJECT!
+< Makefile "" | wc -l > bashout
+echo $?
+./pipex Makefile "" "wc -l" pipout
+echo $?
+
+< Makefile cat | "" > bashout
+echo $?
+./pipex Makefile cat "" pipout
+echo $?
+
+< Makefile "" | "" > bashout
+echo $?
+./pipex Makefile "" "" pipout
+echo $?
