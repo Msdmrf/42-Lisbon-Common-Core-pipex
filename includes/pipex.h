@@ -18,13 +18,11 @@
 # include "../libft/includes/libft.h"
 
 // Error Code Macros
-# define EXIT_SUCCESS 0
-# define EXIT_FAILURE 1
 # define EXIT_CANNOT_EXECUTE 126
 # define EXIT_COMMAND_NOT_FOUND 127
 
 // Error Handling Functions (error_handlers.c)
-void	basic_error(char *error);
+void	basic_error(char *error, int is_exit);
 void	file_error(char *filename, int *fd);
 void	dup2_error(char *error, int infile, int *fd);
 void	exec_error(char *cmd, char *path, char **args);
